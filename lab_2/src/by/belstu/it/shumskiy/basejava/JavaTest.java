@@ -46,7 +46,7 @@ public class JavaTest {
         int iresult = (int) (idouble + ilong);
         System.out.println(iresult);
 
-        long lresult = 0 + 2147483647;
+        long lresult = 10 + 2147483647;
         System.out.println(lresult);
 
 

@@ -4,8 +4,8 @@ public class PassengerCar extends Car{
     public PassengerCar() {
     }
 
-    public PassengerCar(String model, int maxSpeed, int weight, int speed, int price) {
-        super(model, maxSpeed, weight, speed, price);
+    public PassengerCar(String model, EngineType engineType, int consumption, int maxSpeed, int weight, int speed, int price) {
+        super(model, engineType, consumption, maxSpeed, weight, speed, price);
     }
 
     @Override
