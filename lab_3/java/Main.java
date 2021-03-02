@@ -1,6 +1,5 @@
 package com.company.main;
 
-import com.company.vehicle.*;
 import com.company.vehiclemanager.VehicleManager;
 import com.company.vehiclestation.VehicleStation;
 

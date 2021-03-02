@@ -3,8 +3,6 @@ package com.company.vehiclemanager;
 import com.company.vehicle.Car;
 import com.company.vehiclestation.VehicleStation;
 
-import java.util.*;
-
 public class VehicleManager {
 
     private VehicleStation station;
