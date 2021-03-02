@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="15.0.2" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="com.company.vehicle.FreightCar">
+    <void property="consumption">
+     <int>2</int>
+    </void>
+    <void property="engineType">
+     <object class="java.lang.Enum" id="EngineType0" method="valueOf">
+      <class>com.company.vehicle.EngineType</class>
+      <string>electricEngine</string>
+     </object>
+    </void>
+    <void property="maxSpeed">
+     <int>10</int>
+    </void>
+    <void property="model">
+     <string>FreightCar</string>
+    </void>
+    <void property="price">
+     <int>120</int>
+    </void>
+    <void property="speed">
+     <int>5</int>
+    </void>
+    <void property="weight">
+     <int>100</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.company.vehicle.SpecialCar">
+    <void property="consumption">
+     <int>5</int>
+    </void>
+    <void property="engineType">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>com.company.vehicle.EngineType</class>
+      <string>dieselEngine</string>
+     </object>
+    </void>
+    <void property="maxSpeed">
+     <int>10</int>
+    </void>
+    <void property="model">
+     <string>SpecialCar</string>
+    </void>
+    <void property="price">
+     <int>100</int>
+    </void>
+    <void property="speed">
+     <int>5</int>
+    </void>
+    <void property="weight">
+     <int>1000</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.company.vehicle.PassengerCar">
+    <void property="consumption">
+     <int>2</int>
+    </void>
+    <void property="engineType">
+     <object idref="EngineType0"/>
+    </void>
+    <void property="maxSpeed">
+     <int>180</int>
+    </void>
+    <void property="model">
+     <string>PassengerCar</string>
+    </void>
+    <void property="price">
+     <int>10</int>
+    </void>
+    <void property="speed">
+     <int>5</int>
+    </void>
+    <void property="weight">
+     <int>10</int>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>
