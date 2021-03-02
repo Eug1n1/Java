@@ -9,7 +9,7 @@ public abstract class Car implements Vehicle {
     private int price;
     private int consumption;
     private EngineType engineType;
-    private Owner owner;
+    private final Owner owner = new Owner("Eugene", "I", "0.1");
 
     @Override
     public void introduce() {
@@ -22,22 +22,26 @@ public abstract class Car implements Vehicle {
 
     public Car(){}
 
-    public Car(String model, EngineType engineType, int consumption, int maxSpeed, int weight, int speed, int price) {
-        this.model = model;
-        this.maxSpeed = maxSpeed;
-        this.weight = weight;
-        this.speed = speed;
-        this.price = price;
-        this.engineType = engineType;
-        this.consumption = consumption;
-        owner = new Owner("Eugene", "I", "0.1");
+    public Car(String model, EngineType engineType, int consumption, int maxSpeed,
+               int weight, int speed, int price) throws Exception {
+        setModel(model);
+        setMaxSpeed(maxSpeed);
+        setWeight(weight);
+        setSpeed(speed);
+        setPrice(price);
+        setEngineType(engineType);
+        setConsumption(consumption);
     }
 
     public String getModel() {
         return model;
     }
 
-    public void setModel(String model) {
+    public void setModel(String model) throws Exception {
+        if(model == null || model.equals("")) {
+            throw new Exception();
+        }
+
         this.model = model;
     }
 
@@ -45,7 +49,11 @@ public abstract class Car implements Vehicle {
         return maxSpeed;
     }
 
-    public void setMaxSpeed(int maxSpeed) {
+    public void setMaxSpeed(int maxSpeed) throws Exception {
+        if(maxSpeed <= 0) {
+            throw new Exception();
+        }
+
         this.maxSpeed = maxSpeed;
     }
 
@@ -53,7 +61,11 @@ public abstract class Car implements Vehicle {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(int weight) throws Exception {
+        if(weight <= 0){
+            throw new Exception();
+        }
+
         this.weight = weight;
     }
 
@@ -61,7 +73,11 @@ public abstract class Car implements Vehicle {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(int speed) throws Exception {
+        if(speed <= 0 || speed >= maxSpeed) {
+            throw new Exception();
+        }
+
         this.speed = speed;
     }
 
@@ -69,7 +85,11 @@ public abstract class Car implements Vehicle {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(int price) throws Exception {
+        if( price <= 0 ) {
+            throw new Exception();
+        }
+
         this.price = price;
     }
 
@@ -77,7 +97,11 @@ public abstract class Car implements Vehicle {
         return consumption;
     }
 
-    public void setConsumption(int consumption) {
+    public void setConsumption(int consumption) throws Exception {
+        if(consumption <= 0){
+            throw new Exception();
+        }
+
         this.consumption = consumption;
     }
 

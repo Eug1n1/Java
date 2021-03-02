@@ -4,7 +4,7 @@ public class PassengerCar extends Car{
     public PassengerCar() {
     }
 
-    public PassengerCar(String model, EngineType engineType, int consumption, int maxSpeed, int weight, int speed, int price) {
+    public PassengerCar(String model, EngineType engineType, int consumption, int maxSpeed, int weight, int speed, int price) throws Exception {
         super(model, engineType, consumption, maxSpeed, weight, speed, price);
     }
 
