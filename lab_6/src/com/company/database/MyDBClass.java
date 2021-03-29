@@ -1,31 +1,30 @@
-package com.company;
+package com.company.database;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.*;
 import java.util.Properties;
+import java.sql.*;
 
-public class Main {
+public class MyDBClass implements methods {
 
-    static Connection conn;
-    static Statement statement;
+    Connection conn;
+    Statement statement;
 
-    public static void main(String[] args) throws Exception {
+    public MyDBClass(String path) throws IOException, SQLException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
 
-        conn = getConnection();
+        conn = getConnection(path);
         statement = conn.createStatement();
-
-        deleteByYear(1999);
-
     }
 
-    public static void getBooksByYear(String condition) throws Exception {
-        ResultSet result = statement.executeQuery("select * from BOOKS where year(BOOKS.year) " + condition);
-
+    @Override
+    public void getBooksByYear(int year) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("select * from BOOKS WHERE year(BOOKS.year) > ?");
+        preparedStatement.setInt(1, year);
+        ResultSet result = preparedStatement.executeQuery();
         while (result.next()) {
             String title = result.getString(1);
             String author = result.getString(2);
@@ -34,9 +33,11 @@ public class Main {
 
             System.out.printf("%s  %s  %s  %s\n", title, author, date.toString(), publisher);
         }
+        result.close();
     }
 
-    public static void getAuthors() throws SQLException {
+    @Override
+    public void getAuthors() throws SQLException {
         ResultSet result = statement.executeQuery("select * from AUTHORS");
 
         while (result.next()) {
@@ -46,17 +47,21 @@ public class Main {
 
             System.out.printf("%d  %s  %s\n", id, name, country);
         }
+        result.close();
     }
 
-    public static void deleteByYear(int year) throws SQLException {
-        int rows = statement.executeUpdate("DELETE FROM BOOKS WHERE year(BOOKS.year) > " + year);
-        System.out.printf("%d row(s) deleted", rows);
+    @Override
+    public void deleteByYear(int year) throws SQLException {
+        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM BOOKS WHERE year(BOOKS.year) > ?");
+        preparedStatement.setInt(1, year);
+        int rows = preparedStatement.executeUpdate();
+        System.out.printf("%d row(s) deleted\n", rows);
     }
 
-    public static Connection getConnection() throws SQLException, IOException {
-
+    @Override
+    public Connection getConnection(String path) throws IOException, SQLException {
         Properties props = new Properties();
-        try(InputStream in = Files.newInputStream(Paths.get("/home/eug1n1/Java/lab_6/prop/database.properties"))) {
+        try(InputStream in = Files.newInputStream(Paths.get(path))) {
             props.load(in);
         }
         String url = props.getProperty("url");
