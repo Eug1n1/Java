@@ -2,15 +2,30 @@ package com.company.tests;
 
 import com.company.dbClass.MyDBClass;
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+@RunWith(Parameterized.class)
 public class DBClassTests {
 
     static MyDBClass myDb;
+    public int year;
+
+    public DBClassTests(int year) {
+        this.year = year;
+    }
+
+    @Parameterized.Parameters(name = "testData")
+    public static Object[][] createData(){
+        return new Object[][]{
+                {1990}
+        };
+    }
 
     @BeforeClass
     public static void setUp() throws NoSuchMethodException, IOException, InstantiationException, SQLException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
@@ -29,7 +44,7 @@ public class DBClassTests {
 
     @Test
     public void getBooksByYearTest() throws NoSuchMethodException, IOException, InstantiationException, SQLException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
-        ArrayList<String> books = myDb.getBooksByYear(1990);
+        ArrayList<String> books = myDb.getBooksByYear(year);
 
         ArrayList<String> expBooks = new ArrayList<String>();
         expBooks.add("Sergey Pirogov Tihamey pihimey 1996-12-25 Zheltoe derevo");
