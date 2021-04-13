@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hello World EAR!</title>
+  <title>Hello World from war!</title>
 </head>
 <body>
 <h1><%= "Shumskiy Evgeniy 2 POIT 5" %></h1>

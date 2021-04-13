@@ -1,38 +1,64 @@
 package com.company.trash;
 
-public class Member implements Runnable
-{
+import com.company.Main;
 
-    Integer My_Price;
-    Integer My_Price4;
-    Integer My_Price2;
-    String name;
-    int count=1;
-    public Integer My_Price3;
-    public Member(Integer price)
+import java.util.Random;
+import java.util.concurrent.Semaphore;
+
+public class Member implements Runnable {
+    Tender tender;
+    Integer minPrice;
+    Random rnd;
+    int count;
+    Semaphore sem;
+    
+    public Member(Tender tender, int count, Semaphore sem)
     {
-        this.My_Price=price;
+        this.tender = tender;
+        this.count = count;
+        this.sem = sem;
+        this.rnd = new Random();
+        this.minPrice = rnd.nextInt(180) + 100;
     }
 
     @Override
     public void run()
     {
+        while (Main.count > 1) {
+            try {
+                sem.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        My_Price2 = My_Price;
-        if (count == 1) {
-            My_Price3 = My_Price;
-            count++;
+            if(tender.getWinner() == Thread.currentThread().getName() && Main.count == 1) {
+                sem.release();
+                break;
+            }
+
+            int price = tender.getPrice();
+            if(price <= minPrice) {
+                Main.count--;
+                System.out.printf("closed2 %s%n", Thread.currentThread().getName());
+                sem.release();
+                break;
+            }
+
+            int decr = rnd.nextInt(100) + 2;
+
+            if(price - decr <= minPrice) {
+                tender.setPrice(minPrice, Thread.currentThread().getName());
+                System.out.printf("Name: %s\t Price: %d \t Count: %d MIN: %d%n", Thread.currentThread().getName(), tender.getPrice(), Main.count, minPrice);
+                Main.count--;
+                sem.release();
+                System.out.printf("closed1 %s%n", Thread.currentThread().getName());
+                break;
+            }else {
+                tender.setPrice(price - decr, Thread.currentThread().getName());
+            }
+            System.out.printf("Name: %s\t Price: %d \t Count: %d MIN: %d%n", Thread.currentThread().getName(), tender.getPrice(), Main.count, minPrice);
+            count--;
+            sem.release();
         }
-        My_Price4 = (int) (Math.random() * My_Price2);
-        Tender my_tend = new Tender(My_Price4);
-        System.out.println("Я "+Thread.currentThread().getName()+" Моя заявка:" + my_tend.Price);
-        if (My_Price3 > My_Price4) {
-            My_Price3 = My_Price4;
-            name = Thread.currentThread().getName();
-        }
-    }
-    public void Winner()
-    {
-        System.out.println("Победил:"+name+"\n"+"Цена:"+My_Price3);
     }
 }
