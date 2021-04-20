@@ -1,7 +1,6 @@
 package com.company.trash;
 
 import com.company.Main;
-
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 

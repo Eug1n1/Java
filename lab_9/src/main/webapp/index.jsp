@@ -8,6 +8,12 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+
+    <p>Time: ${time}</p>
+    <p>Protocol: ${protocol}</p>
+    <p>Name: ${name}</p>
+    <p>Method: ${method}</p>
+    <p>Header: ${headers}</p>
+
 </body>
 </html>
