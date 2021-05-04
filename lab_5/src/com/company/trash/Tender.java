@@ -5,16 +5,19 @@ public class Tender
     private int price;
     private String winner;
 
-    public int getPrice() {
+    public int getPrice()
+    {
         return price;
     }
 
-    public void setPrice(int price, String name) {
+    public void setPrice(int price, String name)
+    {
         this.price = price;
         this.winner = name;
     }
 
-    public String getWinner() {
+    public String getWinner()
+    {
         return winner;
     }
 

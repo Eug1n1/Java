@@ -52,10 +52,23 @@ public class MyDBClass implements methods {
 
     @Override
     public void deleteByYear(int year) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM BOOKS WHERE year(BOOKS.year) > ?");
-        preparedStatement.setInt(1, year);
-        int rows = preparedStatement.executeUpdate();
+        conn.setAutoCommit(false);
+        Savepoint savepointOne = conn.setSavepoint("SavepointOne");
+        int rows = 0;
+        try
+        {
+            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM BOOKS WHERE year(BOOKS.year) > ?");
+            preparedStatement.setInt(1, year);
+            rows = preparedStatement.executeUpdate();
+            throw new Exception();
+        }
+        catch (Exception e)
+        {
+            conn.rollback(savepointOne);
+        }
+        conn.commit();
         System.out.printf("%d row(s) deleted\n", rows);
+        conn.setAutoCommit(true);
     }
 
     @Override

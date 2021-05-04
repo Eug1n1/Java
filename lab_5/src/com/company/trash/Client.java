@@ -1,22 +1,20 @@
 package com.company.trash;
 
-import java.util.Random;
-
 public class Client implements Runnable
 {
     Integer CommonResource;
     int gave;
     Integer gave1;
+
     public Client(Integer commonResource)
     {
         this.CommonResource=commonResource;
     }
+
     @Override
     public synchronized void  run() {
 
-
-
-        if(CommonResource>0) {
+        if(CommonResource > 0) {
             synchronized (CommonResource) {
                 System.out.println("Забрал лыжи " + Thread.currentThread().getName());
                 System.out.println(CommonResource);

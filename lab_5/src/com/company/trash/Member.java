@@ -23,20 +23,26 @@ public class Member implements Runnable {
     @Override
     public void run()
     {
-        while (Main.count > 1) {
-            try {
+        while (Main.count > 1)
+        {
+            try
+            {
                 sem.acquire();
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e)
+            {
                 e.printStackTrace();
             }
 
-            if(tender.getWinner() == Thread.currentThread().getName() && Main.count == 1) {
+            if(tender.getWinner() == Thread.currentThread().getName() && Main.count == 1)
+            {
                 sem.release();
                 break;
             }
 
             int price = tender.getPrice();
-            if(price <= minPrice) {
+            if(price <= minPrice)
+            {
                 Main.count--;
                 System.out.printf("closed2 %s%n", Thread.currentThread().getName());
                 sem.release();
@@ -45,15 +51,17 @@ public class Member implements Runnable {
 
             int decr = rnd.nextInt(100) + 2;
 
-            if(price - decr <= minPrice) {
+            if(price - decr <= minPrice)
+            {
                 tender.setPrice(minPrice, Thread.currentThread().getName());
                 System.out.printf("Name: %s\t Price: %d \t Count: %d MIN: %d%n", Thread.currentThread().getName(), tender.getPrice(), Main.count, minPrice);
                 Main.count--;
                 sem.release();
                 System.out.printf("closed1 %s%n", Thread.currentThread().getName());
                 break;
-            }else {
-                tender.setPrice(price - decr, Thread.currentThread().getName());
+            }
+            else {
+                    tender.setPrice(price - decr, Thread.currentThread().getName());
             }
             System.out.printf("Name: %s\t Price: %d \t Count: %d MIN: %d%n", Thread.currentThread().getName(), tender.getPrice(), Main.count, minPrice);
             count--;
